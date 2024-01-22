@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pict_admin.service.impl.PictMapper">
+	<!-- 회원 -->
+	<select id="user_list" resultType="pictVO">
+		SELECT * FROM user_table
+		<if test="search_text != null and search_text != '' ">
+			where (
+				nick_name LIKE CONCAT('%', #{search_text}, '%')
+			) 
+		</if>
+	</select>
+	<select id="user_list_one" resultType="pictVO">
+		select * from user_table
+		where idx = #{idx}
+	</select>
+	
+	<insert id="user_insert" parameterType="pictVO">
+		INSERT INTO user_table
+			(
+			 id, nick_name, depart, mobile, use_ty, token, position, email
+			)
+		VALUES (
+			 #{id}, #{nick_name}, #{depart}, #{mobile}, 'Y', #{password}, #{position}, #{email}
+			  ) 
+	</insert>
+	
+	<update id="user_update" parameterType="pictVO">
+		update user_table
+		set nick_name = #{nick_name}, depart = #{depart}, mobile=#{mobile}, email=#{email}
+		where idx = #{idx} and id = #{id}
+	</update>
+	
+	<delete id="user_delete" parameterType="pictVO">
+		delete from user_table where idx = #{idx}
+	</delete>
+	<select id="user_duple" resultType="pictVO">
+		select * from user_table
+		where id = #{id}
+	</select>
+	
+	<update id="user_reset" parameterType="pictVO">
+		update user_table
+		set token = #{password}
+		where idx = #{idx} and id = #{id}
+	</update>
+	
+	<select id="get_user_list" resultType="pictVO">
+		select * from user_table where token is null
+	</select>
+		
+
+	<!-- 띠배너 -->
+	<select id="board_list" resultType="pictVO">
+		select idx, title, en_title, use_at
+		from board_table
+		<if test="search_text != null and search_text != '' ">
+			where (
+				title LIKE CONCAT('%', #{search_text}, '%')
+			) 
+		</if>
+	</select>
+	
+	<select id="board_list_one" resultType="pictVO">
+		select * from board_table
+		where idx = #{idx}
+	</select>
+	
+	<insert id="board_insert" parameterType="pictVO">
+		INSERT INTO board_table
+			(
+			 title, use_at, en_title
+			)
+		VALUES (
+			 #{title}, 'N', #{en_title}
+			  ) 
+	</insert>
+	
+	<update id="board_update" parameterType="pictVO">
+		update board_table
+		set title =#{title}, en_title =#{en_title}
+		where idx = #{idx}
+	</update>
+	
+	<delete id="board_delete" parameterType="pictVO">
+		delete from board_table where idx = #{idx}
+	</delete>
+	
+	<update id="board_cng" parameterType="pictVO">
+		update board_table set use_at = 'N';
+		update board_table set use_at = 'Y' where idx = #{idx};
+	</update>
+	
+	<!-- 동영상 -->
+	<select id="video_list_one" resultType="pictVO">
+		select * from video_table
+	</select>
+	<update id="video_update" parameterType="pictVO">
+		update video_table
+		set link_url =#{link_url}
+	</update>
+	
+	<!--우수참여자 -->
+	<select id="patrol_list" resultType="pictVO">
+		SELECT p.idx, p.user_id, (select max(reg_date) from patrol_table p2 where p2.user_id = p.user_id group by user_id) as reg_date, u.nick_name, u.mobile, u.email, count(*) as cnt
+		FROM patrol_table p 
+		left outer join user_table u on p.user_id = u.id
+		where (select count(idx) from patrol_table p1 where p.user_id = p1.user_id and p1.category = 'scout') >= 15 and p.category = 'scout'
+		and p.category = 'scout'
+		group by user_id
+		order by p.reg_date asc
+	</select>
+	
+	<!-- 슈퍼스타 J -->
+	<select id="superstar_list" resultType="pictVO">
+		select s.*, u.nick_name
+		from superstar_table s
+		left outer join user_table u on s.user_id = u.id
+		where 1=1
+		<if test="type != null and type != '' ">
+			and s.type =#{type}
+		</if>
+		<if test="search_text != null and search_text != '' ">
+			and (
+				s.title LIKE CONCAT('%', #{search_text}, '%')
+			)
+		</if>
+	</select>
+	
+	<select id="superstar_list_one" resultType="pictVO">
+		select s.idx,s.title,s.en_title,s.person,s.en_person,s.team,s.en_team, 
+		file_url,
+		substring_index(concat('https://www.jamboreeverse.co.kr', substring(s.file_url, 2)), '.', -1) as ext,
+		s.reg_date,s.use_at,s.user_id,s.type,s.rdcnt,s.text,s.en_text, u.nick_name
+		from superstar_table s left outer join user_table u on s.user_id = u.id
+		where s.idx = #{idx}
+	</select>
+	
+	<select id="superstar_vote" resultType="pictVO">
+		select s.*, count(*) as vote
+		from vote_table v
+		left outer join superstar_table s on v.superstar_key = s.idx
+		<!-- where s.use_at = 'Y' -->
+		<if test="search_text != null and search_text != '' ">
+			where (
+				s.title LIKE CONCAT('%', #{search_text}, '%')
+			) 
+		</if>
+		group by s.idx
+		order by vote desc
+	</select>
+	
+	
+	<delete id="superstar_delete" parameterType="pictVO">
+		delete from superstar_table where idx = #{idx}
+	</delete>
+	
+	<update id="superstar_cng_yton" parameterType="pictVO">
+		update superstar_table
+		set use_at = 'N'
+		where idx = #{idx}
+	</update>
+		<update id="superstar_cng_ntoy" parameterType="pictVO">
+		update superstar_table
+		set use_at = 'Y'
+		where idx = #{idx}
+	</update>
+	
+	<!-- 저 끝났어요 -->
+	<select id="finish_list" resultType="pictVO">
+		SELECT u.nick_name, f.*
+		FROM finish_table f
+		left outer join user_table u on f.user_id = u.id
+		where 1=1
+		<if test="search_text != null and search_text != '' ">
+			and (
+				u.nick_name LIKE CONCAT('%', #{search_text}, '%')
+			) 
+		</if>
+		<if test="category != null and category != '' ">
+			and f.category = #{category}
+		</if>
+		order by reg_date desc
+	</select>
+	
+	<update id="finish_cng_yton" parameterType="pictVO">
+		update finish_table
+		set use_at = 'N'
+		where idx = #{idx}
+	</update>
+	<update id="finish_cng_ntoy" parameterType="pictVO">
+		update finish_table
+		set use_at = 'Y'
+		where idx = #{idx}
+	</update>
+	
+	<select id="bwf_list" resultType="pictVO">
+		SELECT p.idx, p.user_id, (select max(reg_date) from patrol_table p2 where p2.user_id = p.user_id group by user_id) as reg_date, u.nick_name, u.mobile, u.email, count(*) as cnt
+		FROM patrol_table p 
+		left outer join user_table u on p.user_id = u.id
+		where (select count(idx) from patrol_table p1 where p.user_id = p1.user_id and p1.category = 'bwf') >= 2 and p.category = 'bwf'
+		group by user_id
+		order by p.reg_date asc
+	</select>
+	
+	<select id="wesp_list" resultType="pictVO">
+		SELECT u.id, u.nick_name, u.email, u.mobile, count(*) as cnt
+		FROM count_table c
+		left outer join user_table u on c.user_id = u.id
+		group by user_id
+		order by cnt desc
+	</select>
+	
+	<select id="best_list" resultType="pictVO">
+		select u.id, u.nick_name, u.mobile, u.email, u.depart,
+		(select count(idx) from patrol_table p1 where p1.user_id = u.id and p1.category = 'bwf') as bwf_cnt,
+		(select count(idx) from patrol_table p1 where p1.user_id = u.id and p1.category = 'scout') as scout_cnt,
+		(select count(idx) from finish_table f1 where f1.user_id = u.id and f1.category = 'ox' and f1.use_at = 'Y') as ox_cnt,
+		(select count(idx) from finish_table f1 where f1.user_id = u.id and f1.category = 'maze' and f1.use_at = 'Y') as maze_cnt,
+		(select count(idx) from count_table ct1 where ct1.user_id = u.id) as fish_cnt
+		from user_table u
+		where 1=1
+		and (select count(idx) from patrol_table p1 where p1.user_id = u.id and p1.category = 'bwf') >= 8
+		and (select count(idx) from patrol_table p1 where p1.user_id = u.id and p1.category = 'scout') >= 5
+		and (select count(idx) from finish_table f1 where f1.user_id = u.id and f1.category = 'ox' and f1.use_at = 'Y') >= 1
+		and (select count(idx) from finish_table f1 where f1.user_id = u.id and f1.category = 'maze' and f1.use_at = 'Y') >= 1
+		and (select count(idx) from count_table ct1 where ct1.user_id = u.id) >= 100
+		group by id;
+	</select>
+	
+	
+	<select id="brand_list_one" resultType="pictVO">
+		select * from brand_table
+	</select>
+	
+	<update id="brand_update" parameterType="pictVO">
+		update brand_table
+		set brand_title1 = #{brand_title1}, brand_title2 = #{brand_title2}, brand_title3 = #{brand_title3}, brand_title4 = #{brand_title4}, brand_title5 = #{brand_title5}, brand_title6 = #{brand_title6}, 
+		brand_link1 = #{brand_link1}, brand_link2 = #{brand_link2}, brand_link3 = #{brand_link3}, brand_link4 = #{brand_link4}, brand_link5 = #{brand_link5}, brand_link6 = #{brand_link6}   
+	</update>
+	
+	
+	<update id="test_time" parameterType="pictVO">
+		update test_table
+		set reg_date = now() 
+		where target_id = 'finecom'   
+	</update>
+	
+</mapper>

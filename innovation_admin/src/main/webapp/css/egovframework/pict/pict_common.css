@@ -1,0 +1,5 @@
+@charset "UTF-8";
+.normal-table {border-top: 2px solid; border-left:2px solid; border-right : 2px solid; border-bottom : 2px solid}
+.tbl_body {border-top : 2px solid #000; border-bottom:1px solid #000; border-right : 2px solid #000; max-width: 1200px}
+.table-th {text-align : center; border-bottom:2px solid #000; border-right:2px solid #000; background :#caefff}
+.tbl-row {text-align : center; border-bottom:2px solid #000; border-right:2px solid #000}
