@@ -85,7 +85,7 @@
 									</div>
 								</div>
 									
-								<div class="btn-box">
+								<div class="btn-box" style="margin-top: 60px;">
 									<c:if test="${pictVO.saveType eq 'update'}">
 										<button type="button" onclick="javascript:board_delete()" class="btn-basic btn-fill btn-sm">삭제</button>
 									</c:if>
