@@ -153,9 +153,120 @@ public class PictVO extends PictDefaultVO {
 	private String brand_link6;
 	private String ext;
 	private String en_title;
+	private String file_url1;
+	private String file_url2;
+	private String file_url3;
+	private String file_url4;
+	private String file_url5;
+	private String noti;
+	private String file_idx;
+	private String rank;
+	private String level;
+	private String subtitle;
+	private String from_date;
+	private String to_date;
+	private String location;
+	private String sub_title;
+	private String qr_img;
+	private String owner;
 	
 	
-	
+	public String getQr_img() {
+		return qr_img;
+	}
+	public void setQr_img(String qr_img) {
+		this.qr_img = qr_img;
+	}
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	public String getSub_title() {
+		return sub_title;
+	}
+	public void setSub_title(String sub_title) {
+		this.sub_title = sub_title;
+	}
+	public String getSubtitle() {
+		return subtitle;
+	}
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
+	public String getFrom_date() {
+		return from_date;
+	}
+	public void setFrom_date(String from_date) {
+		this.from_date = from_date;
+	}
+	public String getTo_date() {
+		return to_date;
+	}
+	public void setTo_date(String to_date) {
+		this.to_date = to_date;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public String getFile_idx() {
+		return file_idx;
+	}
+	public void setFile_idx(String file_idx) {
+		this.file_idx = file_idx;
+	}
+	public String getFile_url1() {
+		return file_url1;
+	}
+	public void setFile_url1(String file_url1) {
+		this.file_url1 = file_url1;
+	}
+	public String getFile_url2() {
+		return file_url2;
+	}
+	public void setFile_url2(String file_url2) {
+		this.file_url2 = file_url2;
+	}
+	public String getFile_url3() {
+		return file_url3;
+	}
+	public void setFile_url3(String file_url3) {
+		this.file_url3 = file_url3;
+	}
+	public String getFile_url4() {
+		return file_url4;
+	}
+	public void setFile_url4(String file_url4) {
+		this.file_url4 = file_url4;
+	}
+	public String getFile_url5() {
+		return file_url5;
+	}
+	public void setFile_url5(String file_url5) {
+		this.file_url5 = file_url5;
+	}
+	public String getNoti() {
+		return noti;
+	}
+	public void setNoti(String noti) {
+		this.noti = noti;
+	}
 	public String getEn_title() {
 		return en_title;
 	}

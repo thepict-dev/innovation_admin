@@ -110,7 +110,7 @@
 
 	<div class="login-wrapper">
 	    <div class="login-wrap">
-        	<h1 class="login-title"><img src="/images/pict/logo.png" alt="디지털잼버리" style="width:50%"></h1>
+        	<h1 class="login-title"><img src="/images/pict/logo.png" alt="디지털잼버리" style="width:70%"></h1>
 	        <div class="login-box">
 		        <form action="#" id="entryForm" name="entryForm" method="post">
 	                <div class="login-inner">

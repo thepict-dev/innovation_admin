@@ -24,21 +24,10 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="write-box">
-								
-									<div class="write-item" style="margin-right:20px">
-										<label for="title" class="title">아이디*</label>
-										<div class="input-box">
-											<input type="text" id="id" name="id" value="${pictVO.id}" class="input opt-max-width-200">
-											<c:if test="${pictVO.saveType eq 'insert'}">
-												<button type="button" onclick="javascript:duple_check()" class="btn-basic btn-fill btn-sm">중복확인</button>
-											</c:if>
-										</div>
-										
-									</div>
 									<div class="write-item" style="margin-right:20px">
 										<label for="title" class="title">이름*</label>
 										<div class="input-box">
-											<input type="text" id="nick_name" name="nick_name" value="${pictVO.nick_name}" class="input opt-max-width-200">
+											<input type="text" id="name" name="name" value="${pictVO.name}" class="input opt-max-width-200">
 										</div>
 									</div>
 									<div class="write-item" style="margin-right:20px">
@@ -48,9 +37,19 @@
 										</div>
 									</div>
 									<div class="write-item" style="margin-right:20px">
-										<label for="title" class="title">직급*</label>
+										<label for="title" class="title">직위*</label>
 										<div class="input-box">
-											<input type="text" id="position" name="position" value="${pictVO.position}" class="input opt-max-width-200">
+											<input type="radio" id="rank1" name="level" value="1" <c:if test="${pictVO.level eq '1'}">checked</c:if>>
+											<label for="rank1" style="margin-right:10px">교수</label>
+											
+											<input type="radio" id="rank2" name="level" value="2" <c:if test="${pictVO.level eq '2'}">checked</c:if>>
+											<label for="rank2" style="margin-right:10px">학생</label>
+											
+											<input type="radio" id="rank3" name="level" value="3" <c:if test="${pictVO.level eq '3'}">checked</c:if>>
+											<label for="rank3" style="margin-right:10px">직장인</label>
+											
+											<input type="radio" id="rank4" name="level" value="4" <c:if test="${pictVO.level eq '4'}">checked</c:if>>
+											<label for="rank4">기타</label>
 										</div>
 									</div>
 									<div class="write-item">
@@ -103,53 +102,16 @@
 		function user_list() {
 			location.href = "/user/user_list.do";
 		}
-		function duple_check() {
-			var id = $('#id').val();
-			if (id == "" || id == undefined) {
-				alert("아이디를 입력 후에 중복확인 해주세요.")
-				$('#id').focus();
-				return false;
-			}
-			
-			$.ajax({
-				url : "/user/user_duple.do",
-				type : 'POST',
-				data : {
-					id: id,
-				},
-				success : function(data) {
-					if(data == 'duple'){
-						alert('중복된 아이디가 존재합니다.');
-						return false;
-					}
-					else{
-						alert('사용 가능한 아이디입니다.');
-						$('#duple').val('check');
-						return false;
-					}
-				},
-				error : function(e) {
-					console.log(e)
-				}
-			});
-			
-		}		
+	
 		
 		function button1_click() {
-			var id = $('#id').val();
-			var name = $('#nick_name').val();
+			var name = $('#name').val();
 			var depart = $('#depart').val();
 			var mobile = $('#mobile').val();
-			var duple = $('#duple').val();
 			var saveType = $('#saveType').val();
 			
-			
-			if (id == "" || id == undefined) {
-				window.alert("아이디를 입력해주세요.");
-				$('#id').focus();
-				return false;
-			}
-			else if (name == "" || name == undefined) {
+
+			if (name == "" || name == undefined) {
 				window.alert("이름을 입력해주세요.");
 				$('#name').focus();
 				return false;
@@ -165,43 +127,14 @@
 				return false;
 			}
 			
-			if(duple == '' || duple == undefined){
-				alert("중복체크하세요");
-				return false;
-			}
+			
 			var text = "등록하시겠습니까?";
 			if (saveType == 'update') {
 				text = "수정하시겠습니까?"
 			}
-			if(saveType == 'insert'){
-				$.ajax({
-					url : "/user/user_duple.do",
-					type : 'POST',
-					data : {
-						id: id,
-					},
-					success : function(data) {
-						if(data == 'duple'){
-							alert('중복된 아이디가 존재합니다.');
-							return false;
-						}
-						else{
-							if (confirm(text)) {
-								$("#register").attr("action", "/user/user_save.do");
-								$("#register").submit();
-							}
-						}
-					},
-					error : function(e) {
-						console.log(e)
-					}
-				});
-			}
-			else{
-				if (confirm(text)) {
-					$("#register").attr("action", "/user/user_save.do");
-					$("#register").submit();
-				}
+			if (confirm(text)) {
+				$("#register").attr("action", "/user/user_save.do");
+				$("#register").submit();
 			}
 		}
 		

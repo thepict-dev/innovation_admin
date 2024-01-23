@@ -40,7 +40,6 @@
 							        		<col style="width:15%;">
 							        		<col style="width:15%;">
 							        		<col style="width:10%;">
-							        		<col style="width:10%;">
 							        	</colgroup>
 							            <thead>
 							                <tr class="thead">
@@ -49,7 +48,6 @@
 							                    <th>연락처</th>
 							                    <th>아이디</th>
 							                    <th>이름</th>
-							                    <th>초기화</th>
 							                    <th>삭제</th>
 							                </tr>
 							            </thead>
@@ -60,10 +58,7 @@
 							                    	<td>${resultList.depart}</td>
 							                    	<td>${resultList.mobile}</td>
 							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="user_mod('${resultList.idx}');" class="link">${resultList.id}</a></td>
-							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="user_mod('${resultList.idx}');" class="link">${resultList.nick_name}</a></td>
-							                    	<td>
-							                    		<button type="button" onclick="javascript:user_reset('${resultList.idx}', '${resultList.id}')" class="btn-basic btn-fill btn-sm">초기화</button>
-									            	</td>
+							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="user_mod('${resultList.idx}');" class="link">${resultList.name}</a></td>
 							                    	<td>
 							                    		<button type="button" onclick="javascript:user_delete('${resultList.idx}')" class="btn-basic btn-fill btn-sm">삭제</button>
 									            	</td>
@@ -95,14 +90,7 @@
 			function user_list(){
 				location.href= "/user/user_list.do";
 			}
-			function user_reset(idx, id) {
-				if (confirm("비밀번호를 초기화 하시겠습니까?")) {
-					$('#idx').val(idx)
-					$('#id').val(id)
-					$("#register").attr("action", "/user/user_reset.do");
-					$("#register").submit();
-				}
-			}
+
 			function user_delete(idx) {
 				if (confirm("삭제 하시겠습니까?")) {
 					$('#idx').val(idx)

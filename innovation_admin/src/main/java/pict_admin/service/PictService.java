@@ -35,37 +35,6 @@ import java.util.List;
  *  Copyright (C) by MOPAS All right reserved.
  */
 public interface PictService {
-	List<?> reference_list(PictVO pictVO) throws Exception;
-
-	PictVO reference_list_one(PictVO pictVO) throws Exception;
-
-	void reference_update(PictVO pictVO) throws Exception;
-
-	void reference_insert(PictVO pictVO) throws Exception;
-
-	void reference_delete(PictVO pictVO) throws Exception;
-
-	void reference_file_delete(PictVO pictVO) throws Exception;
-
-	List<?> news_list(PictVO pictVO) throws Exception;
-
-	PictVO news_list_one(PictVO pictVO) throws Exception;
-
-	void news_update(PictVO pictVO) throws Exception;
-
-	void news_insert(PictVO pictVO) throws Exception; 
-
-	void news_delete(PictVO pictVO) throws Exception;
-
-	List<?> history_list(PictVO pictVO) throws Exception;
-
-	PictVO history_list_one(PictVO pictVO) throws Exception;
-
-	void history_update(PictVO pictVO) throws Exception;
-
-	void history_insert(PictVO pictVO) throws Exception;
-
-	void history_delete(PictVO pictVO) throws Exception;
 
 	List<?> user_list(PictVO pictVO) throws Exception;
 
@@ -77,11 +46,6 @@ public interface PictService {
 
 	void user_delete(PictVO pictVO) throws Exception;
 
-	void user_file_delete(PictVO pictVO) throws Exception;
-
-	void history_file_delete(PictVO pictVO) throws Exception;
-
-	//컨텐츠관리 - 띠배너
 	List<?> board_list(PictVO pictVO) throws Exception;
 
 	PictVO board_list_one(PictVO pictVO) throws Exception;
@@ -92,49 +56,58 @@ public interface PictService {
 
 	void board_delete(PictVO pictVO) throws Exception;
 
-	void board_cng(PictVO pictVO) throws Exception;
+	void board_file_delete(PictVO pictVO) throws Exception;
 
-	PictVO video_list_one(PictVO pictVO) throws Exception;
+	List<?> popup_list(PictVO pictVO) throws Exception;
 
-	void video_update(PictVO pictVO) throws Exception;
+	PictVO popup_list_one(PictVO pictVO) throws Exception;
 
-	List<?> patrol_list(PictVO pictVO) throws Exception;
+	void popup_update(PictVO pictVO) throws Exception;
 
-	PictVO user_duple(PictVO pictVO) throws Exception;
+	void popup_insert(PictVO pictVO) throws Exception;
 
-	List<?> superstar_list(PictVO pictVO) throws Exception;
+	void popup_delete(PictVO pictVO) throws Exception;
 
-	List<?> superstar_vote(PictVO pictVO) throws Exception;
+	List<?> program_list(PictVO pictVO) throws Exception;
 
-	void superstar_cng_yton(PictVO pictVO) throws Exception;
+	PictVO program_list_one(PictVO pictVO) throws Exception;
+
+	void program_update(PictVO pictVO) throws Exception; 
+
+	void program_insert(PictVO pictVO) throws Exception;
+
+	void program_delete(PictVO pictVO) throws Exception;
+
+	List<?> event_list(PictVO pictVO) throws Exception;
+
+	PictVO event_list_one(PictVO pictVO) throws Exception;
+
+	void event_update(PictVO pictVO) throws Exception;
+
+	void event_insert(PictVO pictVO) throws Exception;
+
+	void event_delete(PictVO pictVO) throws Exception;
+
+	List<?> data_list(PictVO pictVO) throws Exception;
+
+	PictVO data_list_one(PictVO pictVO) throws Exception;
+
+	List<?> data_type_list(PictVO pictVO) throws Exception;
+
+	void data_update(PictVO pictVO) throws Exception;
+
+	void data_insert(PictVO pictVO) throws Exception;
+
+	void data_delete(PictVO pictVO) throws Exception;
+
+	PictVO data_type_list_one(PictVO pictVO) throws Exception; 
+
+	void data_type_update(PictVO pictVO) throws Exception;
+
+	void data_type_insert(PictVO pictVO) throws Exception;
+
+	void data_type_delete(PictVO pictVO)throws Exception;
+
 	
-	void superstar_cng_ntoy(PictVO pictVO) throws Exception;
-
-	void superstar_delete(PictVO pictVO) throws Exception;
-
-	PictVO superstar_list_one(PictVO pictVO) throws Exception;
-
-	List<?> finish_list(PictVO pictVO) throws Exception;
-
-	void finish_cng_yton(PictVO pictVO) throws Exception;
-
-	void finish_cng_ntoy(PictVO pictVO) throws Exception;
-
-	void user_reset(PictVO pictVO) throws Exception;
-
-	List<?> bwf_list(PictVO pictVO) throws Exception;
-
-	List<?> wesp_list(PictVO pictVO) throws Exception;
-
-	List<?> best_list(PictVO pictVO) throws Exception;
-
-	PictVO brand_list_one(PictVO pictVO) throws Exception;
-
-	void brand_update(PictVO pictVO) throws Exception;
-
-	List<PictVO> get_user_list(PictVO pictVO) throws Exception;
-
-	void test_time(PictVO pictVO) throws Exception;
-
 
 }

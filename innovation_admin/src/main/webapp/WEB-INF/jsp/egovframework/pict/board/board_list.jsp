@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<c:import url="../main/header.jsp">
-    	<c:param name="pageTitle" value="뉴스 리스트"/>
+    	<c:param name="pageTitle" value="게시물 리스트"/>
     </c:import>
     
     <body class="sb-nav-fixed">
@@ -21,7 +21,7 @@
 			
 			<div id="layoutSidenav_content">
 				<main class="contents">
-					<h2 class="contents-title">뉴스 리스트</h2>
+					<h2 class="contents-title">게시물 리스트</h2>
 					<div class="contents-box">
 						<div class="card">
 						    <div class="card-body">
@@ -34,16 +34,18 @@
 						    	<div class="tbl-basic tbl-hover">
 							        <table style="text-align : left">
 							        	<colgroup>
-							        		<col style="width:5%;">
-							        		<col style="width:55%;">
+							        		<col style="width:10%;">
+							        		<col style="width:35%;">
+							        		<col style="width:15%;">
 							        		<col style="width:20%;">
 							        		<col style="width:20%;">
 							        	</colgroup>
 							            <thead>
 							                <tr class="thead">
 							                    <th>순서</th>
-							                    <th>띠 배너명</th>
-							                    <th>사용여부</th>
+							                    <th>제목</th>
+							                    <th>공지여부</th>
+							                    <th>등록일</th>
 							                    <th>삭제</th>
 							                </tr>
 							            </thead>
@@ -53,17 +55,14 @@
 							                    	<td>${status.count}</td>
 							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.title}</a></td>
 							                    	<td>
-							                    		<c:if test="${resultList.use_at eq 'N'}">
-															<button type="button" class="state-box state-n" onclick="javascript:cng_use_at('${resultList.idx}');">
-											            		<span class="text">비활성화</span> 
-											            	</button>
+							                    		<c:if test="${resultList.noti eq '1'}">
+															<span class="text">공지</span>
 										            	</c:if>
-										            	<c:if test="${resultList.use_at ne 'N'}">
-										            		<button type="button" class="state-box state-y" style="cursor: default">
-											            		<span class="text">활성화</span> 
-											            	</button>
+										            	<c:if test="${resultList.noti ne '1'}">
+										            		<span class="text">미공지</span>
 										            	</c:if>
 													</td>
+													<td>${resultList.reg_date}</td>
 							                    	<td>
 							                    		<button type="button" onclick="javascript:board_delete('${resultList.idx}')" class="btn-basic btn-fill btn-sm">삭제</button>
 									            	</td>
@@ -101,16 +100,7 @@
 					$("#register").submit();
 				}
 			}
-			function cng_use_at(idx){
-				$('#idx').val(idx)
-				var text = "해당 배너를 활성화 상태로 변경하시겠습니까?";
-				
-				if(confirm (text)){
-					$("#register").attr("action", "/board/board_cng.do");
-					$("#register").submit();
-				}
-				
-			}
+
 			
 			function search(){
 				$("#search_fm").attr("action", "/board/board_list.do");

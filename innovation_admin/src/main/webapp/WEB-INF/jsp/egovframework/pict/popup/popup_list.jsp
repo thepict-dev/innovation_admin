@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<c:import url="../main/header.jsp">
-    	<c:param name="pageTitle" value="슈퍼스타J 투표현황"/>
+    	<c:param name="pageTitle" value="팝업존 리스트"/>
     </c:import>
     
     <body class="sb-nav-fixed">
@@ -21,7 +21,7 @@
 			
 			<div id="layoutSidenav_content">
 				<main class="contents">
-					<h2 class="contents-title">슈퍼스타J 투표현황</h2>
+					<h2 class="contents-title">팝업존 리스트</h2>
 					<div class="contents-box">
 						<div class="card">
 						    <div class="card-body">
@@ -35,25 +35,28 @@
 							        <table style="text-align : left">
 							        	<colgroup>
 							        		<col style="width:10%;">
-							        		<col style="width:40%;">
-							        		<col style="width:30%;">
+							        		<col style="width:35%;">
+							        		<col style="width:20%;">
 							        		<col style="width:20%;">
 							        	</colgroup>
 							            <thead>
 							                <tr class="thead">
 							                    <th>순서</th>
 							                    <th>제목</th>
-							                    <th>참가자</th>
-							                    <th>득표수</th>
+							                    <th>등록일</th>
+							                    <th>삭제</th>
 							                </tr>
 							            </thead>
 							            <tbody>
 								            <c:forEach var="resultList" items="${resultList}" varStatus="status">
 								                <tr>
 							                    	<td>${status.count}</td>
-							                    	<td>${resultList.title}</td>
-							                    	<td>${resultList.person}</td>
-							                    	<td>${resultList.vote}</td>
+							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.title}</a></td>
+
+													<td>${resultList.reg_date}</td>
+							                    	<td>
+							                    		<button type="button" onclick="javascript:board_delete('${resultList.idx}')" class="btn-basic btn-fill btn-sm">삭제</button>
+									            	</td>
 								                </tr>
 							                </c:forEach>
 							            </tbody>
@@ -74,7 +77,26 @@
 			<input type='hidden' name="type" id="type" value='' />
 		</form>
 		<script>
+
+			function board_mod(idx){
+				location.href= "/popup/popup_register.do?idx="+ idx;
+			}
+			function board_list(){
+				location.href= "/popup/popup_list.do";
+			}
+			function board_delete(idx) {
+				if (confirm("삭제 하시겠습니까?")) {
+					$('#idx').val(idx)
+					$("#register").attr("action", "/popup/popup_delete.do");
+					$("#register").submit();
+				}
+			}
+
 			
+			function search(){
+				$("#search_fm").attr("action", "/popup/popup_list.do");
+				$("#search_fm").submit();
+			}
 		</script>
             
 		<script src="../../../../../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

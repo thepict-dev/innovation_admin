@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <c:import url="../main/header.jsp">
-	<c:param name="pageTitle" value="게시물 등록" />
+	<c:param name="pageTitle" value="프로그램 등록" />
 </c:import>
 <body class="sb-nav-fixed">
 	<form action="" id="register" name="register" method="post" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
 			</div>
 			<div id="layoutSidenav_content">
 				<main class="contents">
-					<h2 class="contents-title">게시물 등록</h2>
+					<h2 class="contents-title">프로그램 등록</h2>
 					<div class="contents-box">
 						<div class="card">
 							<div class="card-body">
@@ -28,7 +28,15 @@
 									<div class="write-item">
 										<label for="title" class="title">제목*</label>
 										<div class="input-box">
-											<input type="text" id="title" name="title" value="${pictVO.title}" class="input opt-max-width-700">
+											<input type="text" id="title" name="title" value="${pictVO.title}" class="input opt-max-width-500">
+										</div>
+									</div>
+								</div>
+								<div class="write-box">
+									<div class="write-item">
+										<label for="title" class="title">부제목</label>
+										<div class="input-box">
+											<input type="text" id="sub_title" name="sub_title" value="${pictVO.sub_title}" class="input opt-max-width-700">
 										</div>
 									</div>
 								</div>
@@ -50,71 +58,39 @@
 									</div>
 								</div>
 								
-								<div class="write-item">
-									<label for="noti" class="title">공지여부</label>
+								<div class="write-item" id="file_div">
+									<label for="title" class="title">썸네일</label>
 									<div class="input-box">
-										<input type="checkbox" id="noti" name="noti" value="1" <c:if test="${pictVO.noti eq '1'}">checked</c:if> style="margin-right:3px"><label for="noti" style="margin-right:10px">공지 여부</label>
+										<input style="margin-bottom:15px" type="file" id="attach_file" name="attach_file" value="${pictVO.img_url}" class="input opt-max-width-600">
+										<div class="select_img1">
+					            			<img src="" style="width:200px; margin-bottom:15px; display: none" id="src_1"/>
+				            			</div>
 									</div>
 								</div>
-					
 								
 								<div class="write-box">
 									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
+										<label for="title" class="title">링크</label>
 										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file" name="attach_file" value="${pictVO.file_url1}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url1 ne '' && pictVO.file_url1 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url1} <a href="#lnk" onclick="fn_file_delete('1')">파일삭제</a>
-											</c:if>
+											<input type="text" id="link_url" name="link_url" value="${pictVO.link_url}" class="input opt-max-width-500">
+										</div>
+									</div>
+								</div>
+								
+								<div class="write-box">
+									<div class="write-item">
+										<label for="title" class="title">행사기간</label>
+										<div class="input-box">
+											<input type="text" class="input opt-max-width-300" id="from_date" name="from_date" value="${pictVO.from_date}" autocomplete="off"> ~ 
+											<input type="text" class="input opt-max-width-300" id="to_date" name="to_date" value="${pictVO.to_date}" autocomplete="off">
 										</div>
 									</div>
 								</div>
 								<div class="write-box">
 									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
+										<label for="title" class="title">장소</label>
 										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file1" name="attach_file1" value="${pictVO.file_url2}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url2 ne '' && pictVO.file_url2 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url2} <a href="#lnk" onclick="fn_file_delete('2')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file2" name="attach_file2" value="${pictVO.file_url3}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url3 ne '' && pictVO.file_url3 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url3} <a href="#lnk" onclick="fn_file_delete('3')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file3" name="attach_file3" value="${pictVO.file_url4}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url4 ne '' && pictVO.file_url4 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url4} <a href="#lnk" onclick="fn_file_delete('4')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file4" name="attach_file4" value="${pictVO.file_url5}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url5 ne '' && pictVO.file_url5 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url5} <a href="#lnk" onclick="fn_file_delete('5')">파일삭제</a>
-											</c:if>
+											<input type="text" id="location" name="location" value="${pictVO.location}" class="input opt-max-width-500">
 										</div>
 									</div>
 								</div>
@@ -146,23 +122,17 @@
 	</form>
 	
 	<script>
-		function fn_file_delete(target){
-			if (confirm("첨부파일을 삭제 하시겠습니까?")) {
-				$('#file_idx').val(target)
-				$("#register").attr("action", "/board/board_file_delete.do");
-				$("#register").submit();
-			}
-		}
+
 		
 		function board_delete() {
 			if (confirm("삭제 하시겠습니까?")) {
-				$("#register").attr("action", "/board/board_delete.do");
+				$("#register").attr("action", "/program/program_delete.do");
 				$("#register").submit();
 			}
 			
 		}
 		function board_list() {
-			location.href = "/board/board_list.do";
+			location.href = "/program/program_list.do";
 		}
 		function button1_click() {
 			var title = $('#title').val();
@@ -179,12 +149,50 @@
 			}
 			oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);
 			if (confirm(text)) {
-				$("#register").attr("action", "/board/board_save.do");
+				$("#register").attr("action", "/program/program_save.do");
 				$("#register").submit();
 			}
 		}
-		
+		$('#attach_file').change(function() {
+			if(this.files && this.files[0]){
+				if(this.files[0].type == '' || this.files[0].type.split('/')[0] != 'image'){
+					alert ('이미지 파일만 첨부할 수 있습니다.');
+					$('#attach_file').val("")
+					return false
+				}
+				var reader = new FileReader;
+				reader.onload = function(data){
+					$('#src_1').show()
+					$(".select_img1 img").attr("src", data.target.result).width(200);
+				}
+				reader.readAsDataURL(this.files[0]);
+			}
+			else{
+				$(".select_img1 img").attr("src", "");
+			}
+		});
+		$( document ).ready(function() {
+					
+			var img_url1 = '${pictVO.img_url}';
+			
+			
+			if(img_url1){
+				$('#src_1').show()
+				$(".select_img1 img").attr("src", img_url1).width(200);
+			}
+		})
+		$( function() {
+		    $( "#from_date" ).datetimepicker({
+		    	format : "Y-m-d H:i"
+		    });
+		    $( "#to_date" ).datetimepicker({
+		    	format : "Y-m-d H:i"
+		    });
+		  } );
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 	<script src="../../../../../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	<script src="../../../../../js/scripts.js"></script>
 	<script src="../../../../../js/Chart.min.js" crossorigin="anonymous"></script>

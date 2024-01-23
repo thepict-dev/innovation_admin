@@ -8,7 +8,7 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <h1 class="header-logo">
     	<a class="navbar-brand ps-3" href="/pict_main.do">
-    		<img src="/images/pict/logo_1.png" alt="디지털잼버리" style="position:relative; left:-5px">
+    		<img src="/images/pict/logo.png" alt="강원지역혁신플랫폼" style="position:relative; left:-5px; padding:0px 22px">
    		</a>
 	</h1>
     <div class="header-info">

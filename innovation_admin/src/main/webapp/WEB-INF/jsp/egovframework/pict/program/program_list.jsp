@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<c:import url="../main/header.jsp">
-    	<c:param name="pageTitle" value="우수참여자 리스트"/>
+    	<c:param name="pageTitle" value="프로그램 리스트"/>
     </c:import>
     
     <body class="sb-nav-fixed">
@@ -21,7 +21,7 @@
 			
 			<div id="layoutSidenav_content">
 				<main class="contents">
-					<h2 class="contents-title">우수참여자 리스트</h2>
+					<h2 class="contents-title">프로그램 리스트</h2>
 					<div class="contents-box">
 						<div class="card">
 						    <div class="card-body">
@@ -35,25 +35,33 @@
 							        <table style="text-align : left">
 							        	<colgroup>
 							        		<col style="width:10%;">
-							        		<col style="width:50%;">
+							        		<col style="width:15%;">
 							        		<col style="width:20%;">
+							        		<col style="width:20%;">
+							        		<col style="width:10%;">
 							        		<col style="width:20%;">
 							        	</colgroup>
 							            <thead>
 							                <tr class="thead">
 							                    <th>순서</th>
-							                    <th>우수참여자</th>
-							                    <th>연락처</th>
-							                    <th>이메일</th>
+							                    <th>제목</th>
+							                    <th>부제목</th>
+							                    <th>행사기간</th>
+							                    <th>등록일</th>
+							                    <th>삭제</th>
 							                </tr>
 							            </thead>
 							            <tbody>
 								            <c:forEach var="resultList" items="${resultList}" varStatus="status">
 								                <tr>
 							                    	<td>${status.count}</td>
-							                    	<td>${resultList.nick_name}</td>
-							                    	<td>${resultList.mobile}</td>
-							                    	<td>${resultList.email}</td>
+							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.title}</a></td>
+													<td>${resultList.sub_title}</td>
+													<td>${resultList.from_date} ~ ${resultList.to_date}</td>
+													<td>${resultList.reg_date}</td>
+							                    	<td>
+							                    		<button type="button" onclick="javascript:board_delete('${resultList.idx}')" class="btn-basic btn-fill btn-sm">삭제</button>
+									            	</td>
 								                </tr>
 							                </c:forEach>
 							            </tbody>
@@ -76,31 +84,22 @@
 		<script>
 
 			function board_mod(idx){
-				location.href= "/board/board_register.do?idx="+ idx;
+				location.href= "/program/program_register.do?idx="+ idx;
 			}
 			function board_list(){
-				location.href= "/board/board_list.do";
+				location.href= "/program/program_list.do";
 			}
 			function board_delete(idx) {
 				if (confirm("삭제 하시겠습니까?")) {
 					$('#idx').val(idx)
-					$("#register").attr("action", "/board/board_delete.do");
+					$("#register").attr("action", "/program/program_delete.do");
 					$("#register").submit();
 				}
 			}
-			function cng_use_at(idx){
-				$('#idx').val(idx)
-				var text = "해당 배너를 활성화 상태로 변경하시겠습니까?";
-				
-				if(confirm (text)){
-					$("#register").attr("action", "/board/board_cng.do");
-					$("#register").submit();
-				}
-				
-			}
+
 			
 			function search(){
-				$("#search_fm").attr("action", "/board/board_list.do");
+				$("#search_fm").attr("action", "/program/program_list.do");
 				$("#search_fm").submit();
 			}
 		</script>
