@@ -867,7 +867,7 @@ public class pictController {
 		}
 		
 	}	
-	@RequestMapping(value = "/data/data_delete.do")
+	@RequestMapping(value = "/data/data_type_delete.do")
 	public String data_type_delete(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
 		String session = (String)request.getSession().getAttribute("id");
 		if(session == null || session == "null") {

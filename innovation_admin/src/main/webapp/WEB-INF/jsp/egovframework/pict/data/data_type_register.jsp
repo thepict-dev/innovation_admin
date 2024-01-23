@@ -28,7 +28,7 @@
 									<div class="write-item">
 										<label for="title" class="title">제목*</label>
 										<div class="input-box">
-											<input type="text" id="title" name="title" value="${pictVO.title}" class="input opt-max-width-700">
+											<input type="text" id="title" name="title" value="${pictVO.title}" class="input opt-max-width-400">
 										</div>
 									</div>
 								</div>
