@@ -4,8 +4,6 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <script type="text/javascript" src="/js/HuskyEZCreator.js" charset="utf-8"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -78,8 +76,7 @@
 									<div class="write-item">
 										<label for="title" class="title">호스트(담당자)</label>
 										
-											<select class="js-example-basic-multiple" name="owner" id="owner" style="width:15%;" multiple="multiple">
-												<option value="" class="selectPlace" style="color: rgba(255, 255, 255, 0.5);">담당자를 선택하세요</option>
+											<select class="hostSelect js-states" name="owner" id="owner" multiple="multiple">
 												<c:forEach var="resultList" items="${resultList}" varStatus="status">
 													<option value="${resultList.idx}">${resultList.name}</option>
 												</c:forEach>
@@ -87,8 +84,6 @@
 										
 									</div>
 								</div>
-								
-								
 									
 								<div class="btn-box">
 									<c:if test="${pictVO.saveType eq 'update'}">
@@ -116,9 +111,11 @@
 	
 	<script>
 
-		$(document).ready(function() {
-		    $('.js-example-basic-multiple').select2();
+		$('.hostSelect').select2({
+			    placeholder: "담당자를 선택하세요.",
+			    allowClear: true
 		});
+		
 		function board_delete() {
 			if (confirm("삭제 하시겠습니까?")) {
 				$("#register").attr("action", "/event/event_delete.do");

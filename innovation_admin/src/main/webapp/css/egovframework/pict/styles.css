@@ -11731,4 +11731,23 @@ body {
 	height: 35px;
 	font-size :13px;
 }
-
+.select2-container{
+	width: 500px !important;
+	border: 1px solid #dedede;
+	border-radius: 0;
+}
+.select2-container--default .select2-selection--multiple {
+    background-color: white;
+    border: 0 !important;
+    border-radius: 0 !important;
+    cursor: text;
+    padding-bottom: 8px;
+    padding-right: 5px;
+    padding-left: 10px;
+    position: relative;
+}
+.select2-container--default .select2-selection--multiple{
+	display: flex;
+	align-items: center;
+	height: 45px;
+}

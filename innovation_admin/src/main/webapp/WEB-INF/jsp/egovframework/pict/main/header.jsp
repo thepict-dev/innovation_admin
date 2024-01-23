@@ -13,6 +13,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>${param.pageTitle}</title>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="../../../../../css/egovframework/pict/reset.css" rel="stylesheet" />
     <link href="../../../../../css/egovframework/pict/styles.css" rel="stylesheet" />
     <link href="../../../../../css/egovframework/pict/contents.css" rel="stylesheet" />
@@ -23,4 +24,5 @@
 	<script src="../../../../../js/scripts.js"></script>
 	<script src="../../../../../js/Chart.min.js" crossorigin="anonymous"></script>
 	<script src="../../../../../js/simple-datatables@latest.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>     
