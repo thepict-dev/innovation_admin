@@ -34,6 +34,9 @@
 												<option value="2" <c:if test="${pictVO.file_type eq '2'}">selected</c:if> >Image</option>
 												<option value="3" <c:if test="${pictVO.file_type eq '3'}">selected</c:if> >Key-Value</option>
 												<option value="4" <c:if test="${pictVO.file_type eq '4'}">selected</c:if> >Text</option>
+												<option value="5" <c:if test="${pictVO.file_type eq '5'}">selected</c:if> >Sensor</option>
+												<option value="6" <c:if test="${pictVO.file_type eq '6'}">selected</c:if> >Time-Series</option>
+												<option value="7" <c:if test="${pictVO.file_type eq '7'}">selected</c:if> >기타</option>
 											</select>
 										</div>
 									</div>

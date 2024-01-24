@@ -280,4 +280,26 @@
 	<delete id="data_type_delete" parameterType="pictVO">
 		delete from data_type_table where idx = #{idx}
 	</delete>
+	
+	<!-- 통계관리 -->
+	<select id="status_list" resultType="pictVO">
+		select d.*, count(s.idx) as cnt, dt.title as data_type_title
+		from data_table d
+		left outer join status_table s on d.idx = s.data_id
+		left outer join data_type_table dt on d.data_type = dt.idx
+
+		where 1=1
+		group by d.idx
+
+	</select>
+	
+	<select id="status_user_list" resultType="pictVO">
+		select d.*, s.name, s.depart, s.level, s.mobile, s.email, s.type, s.type_text
+		from status_table s
+		left outer join data_table d on d.idx = s.data_id
+		where 1=1
+		and d.idx = #{idx}
+
+	</select>
+	
 </mapper>

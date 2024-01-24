@@ -110,6 +110,10 @@ public interface PictService {
 
 	void data_file_delete(PictVO pictVO) throws Exception;
 
+	List<?> status_list(PictVO pictVO) throws Exception;
+
+	List<?> status_user_list(PictVO pictVO) throws Exception;
+
 	
 
 }

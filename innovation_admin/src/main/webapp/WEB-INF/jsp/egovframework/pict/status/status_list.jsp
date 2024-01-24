@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<c:import url="../main/header.jsp">
-    	<c:param name="pageTitle" value="데이터 리스트"/>
+    	<c:param name="pageTitle" value="통계 리스트"/>
     </c:import>
     
     <body class="sb-nav-fixed">
@@ -21,23 +21,16 @@
 			
 			<div id="layoutSidenav_content">
 				<main class="contents">
-					<h2 class="contents-title">데이터 리스트</h2>
+					<h2 class="contents-title">통계 리스트</h2>
 					<div class="contents-box">
 						<div class="card">
 						    <div class="card-body">
-							    <div class="search-form">
-							    	<form action="" id="search_fm" name="search_fm" method="get" class="search-box">
-								    	<input type="text" id="search_text" name="search_text" value="${pictVO.search_text}" class="input" placeholder="검색어를 입력하세요." autocomplete="off">
-								    	<button type="button" onclick="search();" class="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-							    	</form>
-							    </div>
 						    	<div class="tbl-basic tbl-hover">
 							        <table style="text-align : left">
 							        	<colgroup>
 							        		<col style="width:10%;">
-							        		<col style="width:15%;">
-							        		<col style="width:15%;">
-							        		<col style="width:15%;">
+							        		<col style="width:10%;">
+							        		<col style="width:10%;">
 							        		<col style="width:15%;">
 							        		<col style="width:15%;">
 							        		<col style="width:15%;">
@@ -49,8 +42,7 @@
 							                    <th>데이터종류</th>
 							                    <th>카테고리</th>
 							                    <th>데이터명칭</th>
-							                    <th>등록일</th>
-							                    <th>삭제</th>
+							                    <th>다운로드 수(클릭시 상세)</th>
 							                </tr>
 							            </thead>
 							            <tbody>
@@ -73,11 +65,15 @@
 							                    		<c:if test="${resultList.category eq '3'}">스마트 수소에너지</c:if>
 							                    		<c:if test="${resultList.category eq '4'}">기타</c:if>
 							                    	</td>
-							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.title}</a></td>
-													<td>${fn:substring(resultList.reg_date,0,11) }</td>
-							                    	<td>
-							                    		<button type="button" onclick="javascript:board_delete('${resultList.idx}')" class="btn-basic btn-fill btn-sm">삭제</button>
-									            	</td>
+							                    	<td>${resultList.title}</td>
+							                    	<td class="opt-tl">
+							                    		<c:if test="${resultList.cnt ne 0}">
+							                    			<a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.cnt}</a>
+						                    			</c:if>
+						                    			<c:if test="${resultList.cnt eq 0}">
+						                    				${resultList.cnt}
+						                    			</c:if>
+						                    		</td>
 								                </tr>
 							                </c:forEach>
 							            </tbody>
@@ -92,32 +88,14 @@
 				</main>
 			</div>
 		</div>
-		<form action="" id="register" name="register" method="post" enctype="multipart/form-data">
-			<input type='hidden' name="idx" id="idx" value='' />
-			<input type='hidden' name="use_at" id="use_at" value='' />
-			<input type='hidden' name="type" id="type" value='' />
-		</form>
+
 		<script>
 
 			function board_mod(idx){
-				location.href= "/data/data_register.do?idx="+ idx;
-			}
-			function board_list(){
-				location.href= "/data/data_list.do";
-			}
-			function board_delete(idx) {
-				if (confirm("삭제 하시겠습니까?")) {
-					$('#idx').val(idx)
-					$("#register").attr("action", "/data/data_delete.do");
-					$("#register").submit();
-				}
+				location.href= "/status/status_user_list.do?idx=" +idx;
 			}
 
-			
-			function search(){
-				$("#search_fm").attr("action", "/data/data_list.do");
-				$("#search_fm").submit();
-			}
+
 		</script>
             
 		<script src="../../../../../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

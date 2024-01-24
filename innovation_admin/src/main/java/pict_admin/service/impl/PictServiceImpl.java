@@ -285,6 +285,18 @@ public class PictServiceImpl extends EgovAbstractServiceImpl implements PictServ
 		pictMapper.data_file_delete(pictVO);
 	}
 
+	@Override
+	public List<?> status_list(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		return pictMapper.status_list(pictVO);
+	}
+
+	@Override
+	public List<?> status_user_list(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		return pictMapper.status_user_list(pictVO);
+	}
+
 	
 	
 }

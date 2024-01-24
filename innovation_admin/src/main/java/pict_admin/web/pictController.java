@@ -983,6 +983,37 @@ public class pictController {
 		
 	}
 
+	//통계관리
+	@RequestMapping(value = "/status/status_list.do")
+	public String status_list(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		pictVO.setUser_id(session);
+	
+		List<?> reference_list = pictService.status_list(pictVO);
+		model.addAttribute("resultList", reference_list);		
+		model.addAttribute("pictVO", pictVO);
+		
+		return "pict/status/status_list";
+	}
+	@RequestMapping(value = "/status/status_user_list.do")
+	public String status_user_list(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		pictVO.setUser_id(session);
+	
+		List<?> reference_list = pictService.status_user_list(pictVO);
+		model.addAttribute("resultList", reference_list);
+		
+		pictVO = pictService.data_list_one(pictVO);
+		model.addAttribute("pictVO", pictVO);
+		
+		return "pict/status/status_user_list";
+	}
 	
 	//메소드
 	public static String encryptPassword(String password, String id) throws Exception {

@@ -175,9 +175,15 @@ public class PictVO extends PictDefaultVO {
 	private String hashtag;
 	private String data_amount;
 	private String data_type_title;
+	private String type_text;
 	
 	
-	
+	public String getType_text() {
+		return type_text;
+	}
+	public void setType_text(String type_text) {
+		this.type_text = type_text;
+	}
 	public String getFile_type() {
 		return file_type;
 	}
