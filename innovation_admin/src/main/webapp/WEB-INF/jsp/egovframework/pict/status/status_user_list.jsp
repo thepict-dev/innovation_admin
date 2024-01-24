@@ -79,11 +79,25 @@
 				</main>
 			</div>
 		</div>
-
+		<div class="etcModal">
+			<div class="etcModalInner">
+				<p>활용목적</p>
+				<div class="etcText">
+					<p>그냥 필요해서요</p>
+				</div>
+				<button type="button">닫기</button>
+			</div>
+		</div>
 		<script>
 			function board_mod(target){
 				console.log(target)
 			}
+			$('.link').click(function(){
+				$('.etcModal').css('display', 'flex');
+			});
+			$('.etcModalInner button').click(function(){
+				$('.etcModal').css('display', 'none');
+			});
 		</script>
             
 		<script src="../../../../../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
