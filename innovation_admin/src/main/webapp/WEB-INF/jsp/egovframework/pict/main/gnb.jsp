@@ -36,6 +36,8 @@
 <c:set var="data_type_list" value="${fn:indexOf(url, 'data_type_list')}"/>
 <c:set var="data_type_register" value="${fn:indexOf(url, 'data_type_register')}"/>
 
+<c:set var="status_list" value="${fn:indexOf(url, 'status_list')}"/>
+
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
@@ -129,6 +131,15 @@
             <div class="collapse <c:if test="${data_list ne -1}">show</c:if>" id="collapseLayouts6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link <c:if test="${data_list ne -1}">active</c:if>" href="/data/data_list.do">데이터 리스트</a>
+                </nav>
+            </div>
+            
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts7" aria-expanded="true" aria-controls="collapseLayouts7">
+				통계관리
+            </a>
+            <div class="collapse <c:if test="${status_list ne -1}">show</c:if>" id="collapseLayouts7" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link <c:if test="${status_list ne -1}">active</c:if>" href="/status/status_list.do">통계 리스트</a>
                 </nav>
             </div>
             

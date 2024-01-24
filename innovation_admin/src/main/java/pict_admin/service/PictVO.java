@@ -169,8 +169,51 @@ public class PictVO extends PictDefaultVO {
 	private String sub_title;
 	private String qr_img;
 	private String owner;
+	private String file_type;
+	private String data_type;
+	private String data_text;
+	private String hashtag;
+	private String data_amount;
+	private String data_type_title;
 	
 	
+	
+	public String getFile_type() {
+		return file_type;
+	}
+	public void setFile_type(String file_type) {
+		this.file_type = file_type;
+	}
+	public String getData_type() {
+		return data_type;
+	}
+	public void setData_type(String data_type) {
+		this.data_type = data_type;
+	}
+	public String getData_text() {
+		return data_text;
+	}
+	public void setData_text(String data_text) {
+		this.data_text = data_text;
+	}
+	public String getHashtag() {
+		return hashtag;
+	}
+	public void setHashtag(String hashtag) {
+		this.hashtag = hashtag;
+	}
+	public String getData_amount() {
+		return data_amount;
+	}
+	public void setData_amount(String data_amount) {
+		this.data_amount = data_amount;
+	}
+	public String getData_type_title() {
+		return data_type_title;
+	}
+	public void setData_type_title(String data_type_title) {
+		this.data_type_title = data_type_title;
+	}
 	public String getQr_img() {
 		return qr_img;
 	}

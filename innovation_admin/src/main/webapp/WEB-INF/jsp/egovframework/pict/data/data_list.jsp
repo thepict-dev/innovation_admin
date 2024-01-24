@@ -3,7 +3,7 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <!DOCTYPE html>
@@ -35,16 +35,20 @@
 							        <table style="text-align : left">
 							        	<colgroup>
 							        		<col style="width:10%;">
-							        		<col style="width:35%;">
 							        		<col style="width:15%;">
-							        		<col style="width:20%;">
-							        		<col style="width:20%;">
+							        		<col style="width:15%;">
+							        		<col style="width:15%;">
+							        		<col style="width:15%;">
+							        		<col style="width:15%;">
+							        		<col style="width:15%;">
 							        	</colgroup>
 							            <thead>
 							                <tr class="thead">
 							                    <th>순서</th>
-							                    <th>제목</th>
-							                    <th>공지여부</th>
+							                    <th>파일형식</th>
+							                    <th>데이터종류</th>
+							                    <th>카테고리</th>
+							                    <th>데이터명칭</th>
 							                    <th>등록일</th>
 							                    <th>삭제</th>
 							                </tr>
@@ -53,16 +57,19 @@
 								            <c:forEach var="resultList" items="${resultList}" varStatus="status">
 								                <tr>
 							                    	<td>${status.count}</td>
-							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.title}</a></td>
 							                    	<td>
-							                    		<c:if test="${resultList.noti eq '1'}">
-															<span class="text">공지</span>
-										            	</c:if>
-										            	<c:if test="${resultList.noti ne '1'}">
-										            		<span class="text">미공지</span>
-										            	</c:if>
-													</td>
-													<td>${resultList.reg_date}</td>
+							                    		<c:if test="${resultList.file_type eq '1'}">Table</c:if>
+							                    		<c:if test="${resultList.file_type eq '2'}">Image</c:if>
+							                    	</td>
+							                    	<td>${resultList.data_type_title}</td>
+							                    	<td>
+							                    		<c:if test="${resultList.category eq '1'}">정밀의료 데이터</c:if>
+							                    		<c:if test="${resultList.category eq '2'}">헬스케어 데이터</c:if>
+							                    		<c:if test="${resultList.category eq '3'}">스마트 수소에너지</c:if>
+							                    		<c:if test="${resultList.category eq '4'}">기타</c:if>
+							                    	</td>
+							                    	<td class="opt-tl"><a href="javascript:void(0);" onclick="board_mod('${resultList.idx}');" class="link">${resultList.title}</a></td>
+													<td>${fn:substring(resultList.reg_date,0,11) }</td>
 							                    	<td>
 							                    		<button type="button" onclick="javascript:board_delete('${resultList.idx}')" class="btn-basic btn-fill btn-sm">삭제</button>
 									            	</td>
@@ -88,22 +95,22 @@
 		<script>
 
 			function board_mod(idx){
-				location.href= "/board/board_register.do?idx="+ idx;
+				location.href= "/data/data_register.do?idx="+ idx;
 			}
 			function board_list(){
-				location.href= "/board/board_list.do";
+				location.href= "/data/data_list.do";
 			}
 			function board_delete(idx) {
 				if (confirm("삭제 하시겠습니까?")) {
 					$('#idx').val(idx)
-					$("#register").attr("action", "/board/board_delete.do");
+					$("#register").attr("action", "/data/data_delete.do");
 					$("#register").submit();
 				}
 			}
 
 			
 			function search(){
-				$("#search_fm").attr("action", "/board/board_list.do");
+				$("#search_fm").attr("action", "/data/data_list.do");
 				$("#search_fm").submit();
 			}
 		</script>

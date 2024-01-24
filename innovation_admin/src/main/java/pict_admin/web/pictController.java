@@ -516,7 +516,6 @@ public class pictController {
 		if(session == null || session == "null") {
 			return "redirect:/pict_login.do";
 		}
-		System.out.println("얍:::::::::::::::::::::"+ pictVO.getFile_idx());
 		pictService.board_file_delete(pictVO);
 		
 		model.addAttribute("message", "정상적으로 삭제되었습니다.");
@@ -916,8 +915,8 @@ public class pictController {
 		else {
 			pictVO.setSaveType("insert");
 		}
-		List<?> reference_list = pictService.data_type_list(pictVO);
-		model.addAttribute("reference_list", reference_list);
+		List<?> resultList = pictService.data_type_list(pictVO);
+		model.addAttribute("resultList", resultList);
 		model.addAttribute("pictVO", pictVO);
 		return "pict/data/data_register";
 	}
@@ -934,7 +933,7 @@ public class pictController {
 			String uploadPath = fileUpload_board(request, attach_file, (String)request.getSession().getAttribute("id"));
 			String filepath = "https://kdpapi.kangwon.ac.kr/";
 			String filename = uploadPath.split("#####")[1];
-			pictVO.setImg_url(filepath+filename);
+			pictVO.setFile_url(filepath+filename);
 		}
 
 		if(pictVO.getSaveType() != null && pictVO.getSaveType().equals("update")) {
@@ -965,6 +964,21 @@ public class pictController {
 		model.addAttribute("message", "정상적으로 삭제되었습니다.");
 		model.addAttribute("retType", ":location");
 		model.addAttribute("retUrl", "/data/data_list.do");
+		return "pict/main/message";
+		
+	}
+	@RequestMapping(value = "/data/data_file_delete.do")
+	public String data_file_delete(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		
+		pictService.data_file_delete(pictVO);
+		
+		model.addAttribute("message", "정상적으로 삭제되었습니다.");
+		model.addAttribute("retType", ":location");
+		model.addAttribute("retUrl", "/data/data_register.do?idx=" + pictVO.getIdx());
 		return "pict/main/message";
 		
 	}

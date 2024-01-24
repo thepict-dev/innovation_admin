@@ -205,10 +205,13 @@
 	
 	<!-- 데이터 관리 -->
 	<select id="data_list" resultType="pictVO">
-		SELECT * FROM data_table
+		select d.*, dt.title as data_type_title
+		from data_table d
+		left outer join data_type_table dt on d.data_type = dt.idx
+		where 1=1 
 		<if test="search_text != null and search_text != '' ">
-			where (
-				title LIKE CONCAT('%', #{search_text}, '%')
+			and (
+				d.title LIKE CONCAT('%', #{search_text}, '%')
 			) 
 		</if>
 	</select>
@@ -240,6 +243,11 @@
 	<delete id="data_delete" parameterType="pictVO">
 		delete from data_table where idx = #{idx}
 	</delete>
+	
+	<update id="data_file_delete" parameterType="pictVO">
+		update data_table set file_url = '' where idx = #{idx}
+	</update>
+	
 	
 	
 	<!-- 데이터 타입관리 -->

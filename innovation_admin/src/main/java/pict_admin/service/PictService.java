@@ -108,6 +108,8 @@ public interface PictService {
 
 	void data_type_delete(PictVO pictVO)throws Exception;
 
+	void data_file_delete(PictVO pictVO) throws Exception;
+
 	
 
 }

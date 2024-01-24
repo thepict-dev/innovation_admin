@@ -128,7 +128,6 @@
 		}
 		function button1_click() {
 			var title = $('#title').val();
-			
 			if (title == "" || title == undefined) {
 				window.alert("제목을 입력해주세요.");
 				$('#title').focus();

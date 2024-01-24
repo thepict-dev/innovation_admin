@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <script type="text/javascript" src="/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 <!DOCTYPE html>
@@ -26,96 +27,79 @@
 							
 								<div class="write-box">
 									<div class="write-item">
-										<label for="title" class="title">제목*</label>
+										<label for="title" class="title">파일형식</label>
 										<div class="input-box">
-											<input type="text" id="title" name="title" value="${pictVO.title}" class="input opt-max-width-700">
+											<select id="file_type" name="file_type" class="input opt-max-width-300">
+												<option value="1" <c:if test="${pictVO.file_type eq '1'}">selected</c:if> >Table</option>
+												<option value="2" <c:if test="${pictVO.file_type eq '2'}">selected</c:if> >Image</option>
+												<option value="3" <c:if test="${pictVO.file_type eq '3'}">selected</c:if> >Key-Value</option>
+												<option value="4" <c:if test="${pictVO.file_type eq '4'}">selected</c:if> >Text</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="write-box">
+									<div class="write-item">
+										<label for="title" class="title">데이터타입</label>
+										<div class="input-box">
+											<select id="data_type" name="data_type" class="input opt-max-width-300">
+												<c:forEach var="resultList" items="${resultList}" varStatus="status">
+													<option value="${resultList.idx}" <c:if test="${pictVO.data_type eq resultList.idx}">selected</c:if> >${resultList.title}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="write-box">
+									<div class="write-item">
+										<label for="title" class="title">카테고리</label>
+										<div class="input-box">
+											<select id="category" name="category" class="input opt-max-width-400">
+												<option value="1" <c:if test="${pictVO.category  eq '1'}">selected</c:if> >정밀의료 데이터</option>
+												<option value="2" <c:if test="${pictVO.category eq '2'}">selected</c:if> >헬스케어 데이터</option>
+												<option value="3" <c:if test="${pictVO.category eq '3'}">selected</c:if> >스마트 수소에너지</option>
+												<option value="4" <c:if test="${pictVO.category eq '4'}">selected</c:if> >기타</option>
+											</select>
 										</div>
 									</div>
 								</div>
 								
 								<div class="write-item">
-									<label for="title" class="title">내용</label>
+									<label for="noti" class="title">데이터 명칭</label>
 									<div class="input-box">
-										<textarea name="text" id="text" cols="30" rows="10" class="txt" style="width:100%;">${pictVO.text}</textarea>
-		                            	<!-- 에디터 설정 -->
-										<script type="text/javascript">
-											var oEditors = [];
-											nhn.husky.EZCreator.createInIFrame({
-												oAppRef: oEditors,
-												elPlaceHolder: "text", //textarea에서 지정한 id와 일치해야 합니다.
-												sSkinURI: "/js/SmartEditor2Skin.html",
-												fCreator: "createSEditor2"
-											});
-										</script>
+										<input type="text" id="title" name="title" value="${pictVO.title}" class="input opt-max-width-400">
+									</div>
+								</div>
+								<div class="write-item">
+									<label for="noti" class="title">데이터 대상</label>
+									<div class="input-box">
+										<input type="text" id="data_text" name="data_text" value="${pictVO.data_text}" class="input opt-max-width-500">
+									</div>
+								</div>
+								<div class="write-item">
+									<label for="noti" class="title">해시태그</label>
+									<div class="input-box">
+										<input type="text" id="hashtag" name="hashtag" value="${pictVO.hashtag}" class="input opt-max-width-500" placeholder="쉼표(,) 단위로 입력해주세요.">
+									</div>
+								</div>
+								
+								<div class="write-box">
+									<div class="write-item">
+										<label for="title" class="title">데이터파일</label>
+										<div class="input-box">
+											<input style="margin-bottom:15px" type="file" id="attach_file" name="attach_file" value="${pictVO.file_url}" class="input opt-max-width-500">
+											<c:if test="${pictVO.file_url ne '' && pictVO.file_url ne undefined}">
+												<br>
+												첨부된 파일 : ${pictVO.file_url} <a href="#lnk" onclick="fn_file_delete()">파일삭제</a>
+											</c:if>
+										</div>
 									</div>
 								</div>
 								
 								<div class="write-item">
-									<label for="noti" class="title">공지여부</label>
+									<label for="title" class="title">수집 데이터 양</label>
 									<div class="input-box">
-										<input type="checkbox" id="noti" name="noti" value="1" <c:if test="${pictVO.noti eq '1'}">checked</c:if> style="margin-right:3px"><label for="noti" style="margin-right:10px">공지 여부</label>
-									</div>
-								</div>
-					
-								
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file" name="attach_file" value="${pictVO.file_url1}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url1 ne '' && pictVO.file_url1 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url1} <a href="#lnk" onclick="fn_file_delete('1')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file1" name="attach_file1" value="${pictVO.file_url2}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url2 ne '' && pictVO.file_url2 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url2} <a href="#lnk" onclick="fn_file_delete('2')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file2" name="attach_file2" value="${pictVO.file_url3}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url3 ne '' && pictVO.file_url3 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url3} <a href="#lnk" onclick="fn_file_delete('3')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file3" name="attach_file3" value="${pictVO.file_url4}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url4 ne '' && pictVO.file_url4 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url4} <a href="#lnk" onclick="fn_file_delete('4')">파일삭제</a>
-											</c:if>
-										</div>
-									</div>
-								</div>
-								<div class="write-box">
-									<div class="write-item">
-										<label for="title" class="title">첨부파일</label>
-										<div class="input-box">
-											<input style="margin-bottom:15px" type="file" id="attach_file4" name="attach_file4" value="${pictVO.file_url5}" class="input opt-max-width-600">
-											<c:if test="${pictVO.file_url5 ne '' && pictVO.file_url5 ne undefined}">
-												<br>
-												첨부된 파일 : ${pictVO.file_url5} <a href="#lnk" onclick="fn_file_delete('5')">파일삭제</a>
-											</c:if>
-										</div>
+										<textarea name="data_amount" id="" cols="15" rows="5" class="txt" style="width:33%;">${pictVO.data_amount}</textarea>
 									</div>
 								</div>
 								
@@ -141,28 +125,27 @@
 		</div>
 		<input type='hidden' name="saveType" id="saveType" value='${pictVO.saveType}' /> 
 		<input type='hidden' name="idx" id="idx" value='${pictVO.idx}' />
-		<input type='hidden' name="file_idx" id="file_idx" value='${pictVO.file_idx}' />  
 		
 	</form>
 	
 	<script>
+		
 		function fn_file_delete(target){
 			if (confirm("첨부파일을 삭제 하시겠습니까?")) {
-				$('#file_idx').val(target)
-				$("#register").attr("action", "/board/board_file_delete.do");
+				$("#register").attr("action", "/data/data_file_delete.do");
 				$("#register").submit();
 			}
 		}
 		
 		function board_delete() {
 			if (confirm("삭제 하시겠습니까?")) {
-				$("#register").attr("action", "/board/board_delete.do");
+				$("#register").attr("action", "/data/data_delete.do");
 				$("#register").submit();
 			}
 			
 		}
 		function board_list() {
-			location.href = "/board/board_list.do";
+			location.href = "/data/data_list.do";
 		}
 		function button1_click() {
 			var title = $('#title').val();
@@ -177,9 +160,9 @@
 			if (saveType == 'update') {
 				text = "수정하시겠습니까?"
 			}
-			oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);
+			
 			if (confirm(text)) {
-				$("#register").attr("action", "/board/board_save.do");
+				$("#register").attr("action", "/data/data_save.do");
 				$("#register").submit();
 			}
 		}
