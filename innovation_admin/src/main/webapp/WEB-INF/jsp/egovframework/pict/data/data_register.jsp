@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script type="text/javascript" src="/js/HuskyEZCreator.js" charset="utf-8"></script>
 
@@ -45,11 +46,10 @@
 									<div class="write-item">
 										<label for="title" class="title">데이터타입</label>
 										<div class="input-box">
-											<select id="data_type" name="data_type" class="input opt-max-width-300">
-												<c:forEach var="resultList" items="${resultList}" varStatus="status">
-													<option value="${resultList.idx}" <c:if test="${pictVO.data_type eq resultList.idx}">selected</c:if> >${resultList.title}</option>
-												</c:forEach>
-											</select>
+											<c:forEach var="resultList" items="${resultList}" varStatus="status">
+												<input type="checkbox" id="data_type_${resultList.idx}" name="data_type" value="${resultList.idx}" <c:if test="${fn:contains(pictVO.data_type, resultList.idx)}"> checked</c:if> >
+												<label for="data_type_${resultList.idx}" style="margin-right:5px">${resultList.title}</label>
+											</c:forEach>
 										</div>
 									</div>
 								</div>

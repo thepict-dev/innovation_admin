@@ -25,6 +25,7 @@
 					<div class="contents-box">
 						<div class="card">
 						    <div class="card-body">
+						    	<button type="button" onclick="btn_excel('${pictVO.title}');" class="btn-basic btn-sm btn-default point" style="float:right; margin-bottom:10px">엑셀다운로드</button>
 						    	<div class="tbl-basic tbl-hover">
 						    		<span style="float : left; margin-bottom:10px; font-weight:700">${pictVO.title} <span style="font-weight:400">다운로드 상세 내역</span></span> 
 							        <table style="text-align : left">
@@ -54,7 +55,13 @@
 							                    	<td>${status.count}</td>
 							                    	<td>${resultList.name}</td>
 							                    	<td>${resultList.depart}</td>
-							                    	<td>${resultList.level}</td>
+							                    	<td>
+							                    		<c:if test="${resultList.level eq '1'}">교수</c:if>
+							                    		<c:if test="${resultList.level eq '2'}">학생</c:if>
+							                    		<c:if test="${resultList.level eq '3'}">직장인</c:if>
+							                    		<c:if test="${resultList.level eq '4'}">기타</c:if>
+							                    		<c:if test="${resultList.level ne '1' && resultList.level ne '2' && resultList.level ne '3' && resultList.level ne '4'}">${resultList.level}</c:if>
+						                    		</td>
 							                    	<td>${resultList.mobile}</td>
 							                    	<td>${resultList.email}</td>
 							                    	<td class="opt-tl">
@@ -62,7 +69,7 @@
 							                    		<c:if test="${resultList.type eq '2'}">비교과 프로그램 활용</c:if>
 							                    		<c:if test="${resultList.type eq '3'}">해커톤 활용</c:if>
 							                    		<c:if test="${resultList.type eq '4'}">
-								                    		<a href="javascript:void(0);" onclick="board_mod('${resultList.type_text}');" class="link">기타</a>
+								                    		${resultList.type_text}
 						                    			</c:if>
 						                    		</td>
 								                </tr>
@@ -79,25 +86,18 @@
 				</main>
 			</div>
 		</div>
-		<div class="etcModal">
-			<div class="etcModalInner">
-				<p>활용목적</p>
-				<div class="etcText">
-					<p>그냥 필요해서요</p>
-				</div>
-				<button type="button">닫기</button>
-			</div>
-		</div>
+		<form action="" id="search_fm" name="search_fm" method="post" enctype="multipart/form-data">
+			<input type="hidden" id="idx" name="idx" value="${pictVO.idx}"/>
+		</form>
+		
 		<script>
-			function board_mod(target){
-				console.log(target)
+			function btn_excel(target){
+				if(confirm(target+" 리스트를 엑셀파일로 내려받으시겠습니까?")){
+					$("#search_fm").attr("action", "/status/excel_down.do");
+					$("#search_fm").submit();
+					
+				}
 			}
-			$('.link').click(function(){
-				$('.etcModal').css('display', 'flex');
-			});
-			$('.etcModalInner button').click(function(){
-				$('.etcModal').css('display', 'none');
-			});
 		</script>
             
 		<script src="../../../../../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

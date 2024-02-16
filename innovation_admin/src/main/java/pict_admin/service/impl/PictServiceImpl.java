@@ -66,7 +66,7 @@ public class PictServiceImpl extends EgovAbstractServiceImpl implements PictServ
 
 	
 	@Override
-	public List<?> user_list(PictVO pictVO) throws Exception {
+	public List<PictVO> user_list(PictVO pictVO) throws Exception {
 		return pictMapper.user_list(pictVO);
 	}
 
@@ -292,11 +292,46 @@ public class PictServiceImpl extends EgovAbstractServiceImpl implements PictServ
 	}
 
 	@Override
-	public List<?> status_user_list(PictVO pictVO) throws Exception {
+	public List<PictVO> status_user_list(PictVO pictVO) throws Exception {
 		// TODO Auto-generated method stub
 		return pictMapper.status_user_list(pictVO);
 	}
 
+	@Override
+	public List<?> banner_list(PictVO pictVO) throws Exception {
+		return pictMapper.banner_list(pictVO);
+	}
+
+	@Override
+	public PictVO banner_list_one(PictVO pictVO) throws Exception {
+		return pictMapper.banner_list_one(pictVO);
+	}
+
+	@Override
+	public void banner_update(PictVO pictVO) throws Exception {
+		pictMapper.banner_update(pictVO);
+	}
+
+	@Override
+	public void banner_insert(PictVO pictVO) throws Exception {
+		pictMapper.banner_insert(pictVO);
+	}
+
+	@Override
+	public void banner_delete(PictVO pictVO) throws Exception {
+		pictMapper.banner_delete(pictVO);
+	}
+
+	@Override
+	public void banner_cng_use_at(PictVO pictVO) throws Exception {
+		pictMapper.banner_cng_use_at(pictVO);
+	}
+
+	@Override
+	public void event_object_insert(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		pictMapper.event_object_insert(pictVO);
+	}
 	
 	
 }

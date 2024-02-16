@@ -175,7 +175,7 @@
 		select * from event_table
 		where idx = #{idx}
 	</select>
-	<insert id="event_insert" parameterType="pictVO">
+	<insert id="event_insert" parameterType="pictVO" useGeneratedKeys="true" keyProperty="idx">
 		INSERT INTO event_table
 			(
 			 title, img_url, from_date, to_date, password, sub_title, qr_img, owner, reg_date
@@ -186,13 +186,17 @@
 	</insert>
 	<update id="event_update" parameterType="pictVO">
 		update event_table
-		set title = #{title}, from_date = #{from_date}, to_date=#{to_date}, password = #{password}, sub_title = #{sub_title}, owner=#{owner}
+		set title = #{title}, from_date = #{from_date}, to_date=#{to_date}, password = #{password}, sub_title = #{sub_title}
+		
+		<if test="owner != null and owner != '' ">
+			, owner=#{owner}
+		</if>
 		
 		<if test="img_url != null and img_url != '' ">
 			, img_url = #{img_url}
 		</if>
-		<if test="qr_imb != null and qr_imb != '' ">
-			, qr_imb = #{qr_imb}
+		<if test="qr_img != null and qr_img != '' ">
+			, qr_img = #{qr_img}
 		</if>
 		
 		, reg_date = now()
@@ -202,6 +206,15 @@
 		delete from event_table where idx = #{idx}
 	</delete>
 	
+	<insert id="event_object_insert" parameterType="pictVO" useGeneratedKeys="true" keyProperty="idx">
+		INSERT INTO event_obj_table
+			(
+			 event_id
+			)
+		VALUES (
+			 #{event_id}
+			  ) 
+	</insert>
 	
 	<!-- 데이터 관리 -->
 	<select id="data_list" resultType="pictVO">
@@ -301,5 +314,45 @@
 		and d.idx = #{idx}
 
 	</select>
+	
+	
+	<!-- 띠배너 -->
+	<select id="banner_list" resultType="pictVO">
+		select * from line_notice
+		<if test="search_text != null and search_text != '' ">
+			where (
+				title LIKE CONCAT('%', #{search_text}, '%')
+			) 
+		</if>
+		order by createdAt desc
+	</select>
+	<select id="banner_list_one" resultType="pictVO">
+		select * from line_notice where idx = #{idx}
+	</select>
+	
+	<insert id="banner_insert" parameterType="pictVO">
+		INSERT INTO line_notice
+			(
+			 text, createdAt, use_at
+			)
+		VALUES (
+			 #{text}, now(), '0'
+			  )
+	</insert>
+	
+	<update id="banner_update" parameterType="pictVO">
+		update line_notice
+		set text = #{text}
+		where idx=#{idx}
+	</update>
+	
+	<delete id="banner_delete" parameterType="pictVO">
+		delete from line_notice where idx = #{idx}
+	</delete>	
+	
+	<update id="banner_cng_use_at" parameterType="pictVO">
+		update line_notice set use_at = '0'; 
+		update line_notice set use_at = '1' where idx = #{idx};
+	</update>
 	
 </mapper>

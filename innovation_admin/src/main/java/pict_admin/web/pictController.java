@@ -61,6 +61,9 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
@@ -449,31 +452,31 @@ public class pictController {
 		
 		if(attach_file.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setFile_url1(filepath+filename);
 		}
 		if(attach_file1.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file1, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setFile_url2(filepath+filename);
 		}
 		if(attach_file2.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file2, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setFile_url3(filepath+filename);
 		}
 		if(attach_file3.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file3, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setFile_url4(filepath+filename);
 		}
 		if(attach_file4.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file4, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setFile_url5(filepath+filename);
 		}
@@ -573,7 +576,7 @@ public class pictController {
 		
 		if(attach_file.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setImg_url(filepath+filename);
 		}
@@ -659,7 +662,7 @@ public class pictController {
 		
 		if(attach_file.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setImg_url(filepath+filename);
 		}
@@ -712,6 +715,7 @@ public class pictController {
 		
 		return "pict/event/event_list";
 	}
+	@SuppressWarnings("null")
 	@RequestMapping(value = "/event/event_register.do")
 	public String event_register(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
 		String session = (String)request.getSession().getAttribute("id");
@@ -729,9 +733,27 @@ public class pictController {
 		else {
 			pictVO.setSaveType("insert");
 		}
-		List<?> reference_list = pictService.user_list(pictVO);
-		model.addAttribute("resultList", reference_list);
+		List<PictVO> reference_list = pictService.user_list(pictVO);
+		String owner_txt = "";
 		
+		
+		if(pictVO.getOwner() != null) {
+			String []owner = pictVO.getOwner().split(",");
+			
+			for(int i=0; i<owner.length; i++) {
+				for(int j=0; j<reference_list.size(); j++) {
+					String str_o = owner[i];
+					String str_i = reference_list.get(j).getIdx() + "";
+					if(str_o.equals(str_i)) {
+						owner_txt += reference_list.get(j).getName() + ",";
+					}
+				}
+			}
+		}
+		
+		
+		model.addAttribute("resultList", reference_list);
+		model.addAttribute("owner_txt", owner_txt);
 		model.addAttribute("pictVO", pictVO);
 		return "pict/event/event_register";
 	}
@@ -746,7 +768,7 @@ public class pictController {
 		
 		if(attach_file.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setImg_url(filepath+filename);
 		}
@@ -761,9 +783,10 @@ public class pictController {
 		else {
 			//여기서 QR코드 발급하고 넣어야함
 			
-			String content = (String) "https://www.thepict.co.kr";	//행사장URL 뒤에 행사장 idx로 발급해야함
+			String content = (String) "https://www.thepict.co.kr";	//행사장URL 뒤에 행사장 idx로 발급해야함 재영
+			///venuhall/[id]
 	        String fileName = "";
-	        String savePath = "D:\\innovation_admin";	//경로는 서버 경로로 server 하위에 uploadfile 맞춰서
+	        String savePath = "/home/kangwon-data-center/server/upload_file";	//경로는 서버 경로로 server 하위에 uploadfile 맞춰서 재영
 
 	        //한글 데이터 처리
 	        QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -779,8 +802,10 @@ public class pictController {
             //ImageIO를 사용하여 파일쓰기
             ImageIO.write(bufferedImage, "png", temp);
             
-			pictVO.setQr_img(temp.toString());
+			pictVO.setQr_img("/"+fileName + ".png");
 			pictService.event_insert(pictVO);
+			pictVO.setEvent_id(pictVO.getIdx()+"");
+			pictService.event_object_insert(pictVO);
 			model.addAttribute("message", "정상적으로 저장되었습니다.");
 			model.addAttribute("retType", ":location");
 			model.addAttribute("retUrl", "/event/event_list.do");
@@ -931,7 +956,7 @@ public class pictController {
 		
 		if(attach_file.getSize() != 0) {
 			String uploadPath = fileUpload_board(request, attach_file, (String)request.getSession().getAttribute("id"));
-			String filepath = "https://kdpapi.kangwon.ac.kr/";
+			String filepath = "/";	//재영
 			String filename = uploadPath.split("#####")[1];
 			pictVO.setFile_url(filepath+filename);
 		}
@@ -1006,7 +1031,7 @@ public class pictController {
 		}
 		pictVO.setUser_id(session);
 	
-		List<?> reference_list = pictService.status_user_list(pictVO);
+		List<PictVO> reference_list = pictService.status_user_list(pictVO);
 		model.addAttribute("resultList", reference_list);
 		
 		pictVO = pictService.data_list_one(pictVO);
@@ -1014,6 +1039,243 @@ public class pictController {
 		
 		return "pict/status/status_user_list";
 	}
+	@RequestMapping(value = "/status/excel_down.do")
+	public void excel_down(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<PictVO> attendance_list = pictService.status_user_list(pictVO);
+		HSSFWorkbook objWorkBook = new HSSFWorkbook();
+        HSSFSheet objSheet = null;
+        HSSFRow objRow = null;
+        HSSFCell objCell = null;       //셀 생성
+
+        //제목 폰트
+        HSSFFont font = objWorkBook.createFont();
+        HSSFFont font_title = objWorkBook.createFont();
+        font_title.setFontHeightInPoints((short)11);
+        font.setFontHeightInPoints((short)9);
+        font.setFontName("맑은고딕");
+		int rowIndex = 0;
+		
+		HSSFCellStyle styleHd_title = objWorkBook.createCellStyle(); // 제목 스타일
+		HSSFCellStyle styleHd = objWorkBook.createCellStyle();    //내용 스타일
+		
+		styleHd_title.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		styleHd_title.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		// 각항목 테두리
+		styleHd.setBorderRight(BorderStyle.THIN);
+		styleHd.setBorderLeft(BorderStyle.THIN);
+		styleHd.setBorderTop(BorderStyle.THIN);
+		styleHd.setBorderBottom(BorderStyle.THIN);
+		styleHd.setWrapText(true);//자동 줄바꿈
+
+		styleHd_title.setBorderRight(BorderStyle.THIN);
+		styleHd_title.setBorderLeft(BorderStyle.THIN);
+		styleHd_title.setBorderTop(BorderStyle.THIN);
+		styleHd_title.setBorderBottom(BorderStyle.THIN);
+					
+        objSheet = objWorkBook.createSheet("첫번째 시트");     //워크시트 생성
+		
+		
+		//헤더
+        objRow = objSheet.createRow(0);
+        objRow.setHeight ((short) 0x150);
+        
+        objCell = objRow.createCell(0);
+        objCell.setCellValue("순서");
+        objCell.setCellStyle(styleHd_title);
+
+        objCell = objRow.createCell(1);
+        objCell.setCellValue("이름");
+        objCell.setCellStyle(styleHd_title);
+		
+        objCell = objRow.createCell(2);
+        objCell.setCellValue("소속");
+        objCell.setCellStyle(styleHd_title);
+        
+        objCell = objRow.createCell(3);
+        objCell.setCellValue("직급");
+        objCell.setCellStyle(styleHd_title);
+        
+        objCell = objRow.createCell(4);
+        objCell.setCellValue("연락처");
+        objCell.setCellStyle(styleHd_title);
+        
+        objCell = objRow.createCell(5);
+        objCell.setCellValue("이메일");
+        objCell.setCellStyle(styleHd_title);
+        
+        objCell = objRow.createCell(6);
+        objCell.setCellValue("활용목적");
+        objCell.setCellStyle(styleHd_title);
+
+        pictVO = pictService.data_list_one(pictVO);
+        
+		//바디
+		for(int i=0; i<attendance_list.size(); i++) {
+			//순서
+			objRow = objSheet.createRow(i+1);
+	        objRow.setHeight ((short) 0x150);
+	        objSheet.autoSizeColumn(i);
+	        
+	        //번호
+	        objCell = objRow.createCell(0);
+	        objCell.setCellValue(i+1);
+	        objSheet.setColumnWidth(0, (short)0x700);
+	        objCell.setCellStyle(styleHd);
+	        
+	        //이름
+	        objCell = objRow.createCell(1);
+	        objCell.setCellValue(attendance_list.get(i).getName());
+	        objSheet.setColumnWidth(1, (short)0x1000);
+	        objCell.setCellStyle(styleHd);
+
+	        //소속
+	        objCell = objRow.createCell(2);
+	        objCell.setCellValue(attendance_list.get(i).getDepart());
+	        objSheet.setColumnWidth(2, (short)0x1500);
+	        objCell.setCellStyle(styleHd);
+	        
+	        //직급
+	        objCell = objRow.createCell(3);
+	        objCell.setCellValue(attendance_list.get(i).getLevel());
+	        objSheet.setColumnWidth(3, (short)0x1500);
+	        objCell.setCellStyle(styleHd);
+	        
+	        //연락처
+	        objCell = objRow.createCell(4);
+	        objCell.setCellValue(attendance_list.get(i).getMobile());
+	        objSheet.setColumnWidth(4, (short)0x1500);
+	        objCell.setCellStyle(styleHd);
+	        
+	        //이메일
+	        objCell = objRow.createCell(5);
+	        objCell.setCellValue(attendance_list.get(i).getEmail());
+	        objSheet.setColumnWidth(5, (short)0x2000);
+	        objCell.setCellStyle(styleHd);
+	        
+	        //활용목적
+	        objCell = objRow.createCell(6);
+	        String type = "";
+	        if(attendance_list.get(i).getType().equals("1")) type = "정규교과 실습 등 활용";
+	        if(attendance_list.get(i).getType().equals("2")) type = "비교과 프로그램 활용";
+	        if(attendance_list.get(i).getType().equals("3")) type = "해커톤 활용";
+	        if(attendance_list.get(i).getType().equals("4")) type = attendance_list.get(i).getType_text();
+	        objCell.setCellValue(type);
+	        objSheet.setColumnWidth(6, (short)0x4000);
+	        objCell.setCellStyle(styleHd);
+	       
+		}
+		
+		String filename = pictVO.getTitle() + " 다운로드 상세내역";
+		String header = request.getHeader("User-Agent");
+		if(header.contains("Edge") || header.contains("MSIE")) {
+			filename = URLEncoder.encode(filename, "UTF-8").replaceAll("//+", "%20");
+		}
+		else if(header.contains("Chrome") || header.contains("Opera") || header.contains("Firefox")) {
+			filename = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
+		}
+        
+        response.setHeader("Content-Disposition", "ATTachment; Filename=" +filename +".xls");
+
+        OutputStream fileOut  = response.getOutputStream();
+        objWorkBook.write(fileOut);
+        fileOut.close();
+
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+	}
+	
+	
+	//띠 배너
+	@RequestMapping(value = "/banner/banner_list.do")
+	public String banner_list(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		pictVO.setUser_id(session);
+	
+		List<?> poster_list = pictService.banner_list(pictVO);
+		model.addAttribute("resultList", poster_list);
+		model.addAttribute("pictVO", pictVO);
+		
+		return "pict/banner/banner_list";
+	}
+	@RequestMapping(value = "/banner/banner_register.do")
+	public String banner_register(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		pictVO.setUser_id(session);
+		System.out.println(pictVO.getUser_id());
+		if(pictVO.getIdx() != 0) {
+			//수정
+			pictVO = pictService.banner_list_one(pictVO);
+			pictVO.setSaveType("update");
+			
+			
+		}
+		else {
+			pictVO.setSaveType("insert");
+		}
+		
+		model.addAttribute("pictVO", pictVO);
+		return "pict/banner/banner_register";
+	}
+	@RequestMapping(value = "/banner/banner_save.do", method = RequestMethod.POST)
+	public String banner_save(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, MultipartHttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		if(pictVO.getSaveType() != null && pictVO.getSaveType().equals("update")) {
+			pictService.banner_update(pictVO);
+			model.addAttribute("message", "정상적으로 수정되었습니다.");
+			model.addAttribute("retType", ":location");
+			model.addAttribute("retUrl", "/banner/banner_list.do");
+			return "pict/main/message";
+		}
+		else {
+			pictService.banner_insert(pictVO);
+			model.addAttribute("message", "정상적으로 저장되었습니다.");
+			model.addAttribute("retType", ":location");
+			model.addAttribute("retUrl", "/banner/banner_list.do");
+			return "pict/main/message";	
+		}
+		
+	}	
+	@RequestMapping(value = "/banner/banner_delete.do")
+	public String banner_delete(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+		
+		pictService.banner_delete(pictVO);
+		
+		model.addAttribute("message", "정상적으로 삭제되었습니다.");
+		model.addAttribute("retType", ":location");
+		model.addAttribute("retUrl", "/banner/banner_list.do");
+		return "pict/main/message";
+		
+	}	
+	@RequestMapping(value = "/banner/cng_use_at.do")
+	public String poster_cng_use_at(@ModelAttribute("searchVO") PictVO pictVO, ModelMap model, HttpServletRequest request) throws Exception {
+		String session = (String)request.getSession().getAttribute("id");
+		if(session == null || session == "null") {
+			return "redirect:/pict_login.do";
+		}
+
+		pictService.banner_cng_use_at(pictVO);
+		
+		model.addAttribute("message", "정상적으로 저장되었습니다.");
+		model.addAttribute("retType", ":location");
+		model.addAttribute("retUrl", "/banner/banner_list.do");
+		return "pict/main/message";	
+	}
+	
 	
 	//메소드
 	public static String encryptPassword(String password, String id) throws Exception {
@@ -1060,7 +1322,7 @@ public class pictController {
     }
     
     private String getSaveLocation(MultipartHttpServletRequest request, MultipartFile uploadFile) {
-    	String uploadPath = "/home/KDigital/server/upload_file/";
+    	String uploadPath = "/home/kangwon-data-center/server/upload_file/";	//재영 여기 경로 바꿔야되고
     	return uploadPath;
     }
 

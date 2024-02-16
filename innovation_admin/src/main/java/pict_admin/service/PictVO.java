@@ -176,8 +176,22 @@ public class PictVO extends PictDefaultVO {
 	private String data_amount;
 	private String data_type_title;
 	private String type_text;
+	private String createdAt;
+	private String event_id;
 	
 	
+	public String getEvent_id() {
+		return event_id;
+	}
+	public void setEvent_id(String event_id) {
+		this.event_id = event_id;
+	}
+	public String getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
 	public String getType_text() {
 		return type_text;
 	}

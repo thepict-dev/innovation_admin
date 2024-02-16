@@ -41,7 +41,7 @@ import pict_admin.service.PictVO;
 @Mapper("pictMapper")
 public interface PictMapper {
 	
-	List<?> user_list(PictVO pictVO) throws Exception;
+	List<PictVO> user_list(PictVO pictVO) throws Exception;
 
 	PictVO user_list_one(PictVO pictVO) throws Exception;
 
@@ -117,7 +117,21 @@ public interface PictMapper {
 
 	List<?> status_list(PictVO pictVO) throws Exception;
 
-	List<?> status_user_list(PictVO pictVO) throws Exception;
+	List<PictVO> status_user_list(PictVO pictVO) throws Exception;
+
+	List<?> banner_list(PictVO pictVO) throws Exception;
+
+	PictVO banner_list_one(PictVO pictVO) throws Exception;
+
+	void banner_update(PictVO pictVO) throws Exception;
+
+	void banner_insert(PictVO pictVO) throws Exception;
+
+	void banner_delete(PictVO pictVO) throws Exception;
+
+	void banner_cng_use_at(PictVO pictVO) throws Exception;
+
+	void event_object_insert(PictVO pictVO) throws Exception;
 
 	
 }

@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <script type="text/javascript" src="/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 <!DOCTYPE html>
@@ -66,7 +68,7 @@
 									<div class="write-item">
 										<label for="title" class="title">행사설명</label>
 										<div class="input-box">
-											<input type="text" id="sub_title" name="sub_title" value="${pictVO.sub_title}" class="input opt-max-width-700">
+											<input type="text" id="sub_title" name="sub_title" value="${pictVO.sub_title}" class="input opt-max-width-500">
 										</div>
 									</div>
 								</div>
@@ -76,12 +78,12 @@
 									<div class="write-item">
 										<label for="title" class="title">호스트(담당자)</label>
 										
-											<select class="hostSelect js-states" name="owner" id="owner" multiple="multiple">
-												<c:forEach var="resultList" items="${resultList}" varStatus="status">
-													<option value="${resultList.idx}">${resultList.name}</option>
-												</c:forEach>
-											</select>
-										
+										<select class="hostSelect js-states" name="owner" id="owner" multiple="multiple">
+											<c:forEach var="resultList" items="${resultList}" varStatus="status">
+												<option value="${resultList.idx}" <c:if test="${fn:contains(pictVO.owner, resultList.idx)}">selected</c:if>>${resultList.name}</option>
+											</c:forEach>
+										</select>
+			
 									</div>
 								</div>
 									
@@ -162,14 +164,13 @@
 			}
 		});
 		$( document ).ready(function() {
-					
 			var img_url1 = '${pictVO.img_url}';
-			
 			
 			if(img_url1){
 				$('#src_1').show()
 				$(".select_img1 img").attr("src", img_url1).width(200);
 			}
+			
 		})
 		$( function() {
 		    $( "#from_date" ).datetimepicker({

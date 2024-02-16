@@ -38,6 +38,9 @@
 
 <c:set var="status" value="${fn:indexOf(url, 'status')}"/>
 
+<c:set var="banner_list" value="${fn:indexOf(url, 'banner_list')}"/>
+<c:set var="banner_register" value="${fn:indexOf(url, 'banner_register')}"/>
+
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
@@ -140,6 +143,20 @@
             <div class="collapse <c:if test="${status ne -1}">show</c:if>" id="collapseLayouts7" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link <c:if test="${status ne -1}">active</c:if>" href="/status/status_list.do">통계 리스트</a>
+                </nav>
+            </div>
+            
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts8" aria-expanded="true" aria-controls="collapseLayouts8">
+				띠배너 관리
+            </a>
+            <div class="collapse <c:if test="${banner_list ne -1}">show</c:if>" id="collapseLayouts8" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link <c:if test="${banner_list ne -1}">active</c:if>" href="/banner/banner_list.do">띠배너 리스트</a>
+                </nav>
+            </div>
+            <div class="collapse <c:if test="${banner_register ne -1}">show</c:if>" id="collapseLayouts8" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link <c:if test="${banner_register ne -1}">active</c:if>" href="/banner/banner_register.do">띠배너 등록</a>
                 </nav>
             </div>
             
